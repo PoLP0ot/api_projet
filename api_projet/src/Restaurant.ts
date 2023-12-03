@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, IsNumber, IsLatitude, IsLongitude, IsInt } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional,  IsLatitude, IsLongitude, IsInt } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class Restaurant {
@@ -81,16 +81,16 @@ export class Restaurant {
     @IsString()
     modepaiement: string;
 
-    @IsNotEmpty()
-    @IsString()
-    get adresseComplete(): string {
+
+    private getCompleteAdresse(): string {
         // Retourne 'adresse1' si elle n'est pas vide, sinon 'adresse2'
         this.adressecomplete = this.adresse1 || this.adresse2;
-        return this.adressecomplete;
+        return
     }
 
     constructor(data?: any) {
         if (data) {
+
             this.nomoffre = data.nomoffre;
             this.type = data.type;
             this.categorie = data.categorie;
@@ -110,6 +110,7 @@ export class Restaurant {
             this.accueilgroupe = data.accueilgroupe;
             this.tarifs = data.tarifs;
             this.modepaiement = data.modepaiement;
+            this.adressecomplete = this.getCompleteAdresse();
         }
     }
 }

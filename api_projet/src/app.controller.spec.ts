@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { RestaurantController } from './Restaurant.controller';
 import { RestaurantService } from './Restaurant.service';
 import { Restaurant } from './Restaurant';
+import { HttpModule } from '@nestjs/axios';
 
 describe('RestaurantModule', () => {
   let controller: RestaurantController;
@@ -9,6 +10,7 @@ describe('RestaurantModule', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [HttpModule],
       controllers: [RestaurantController],
       providers: [RestaurantService],
     }).compile();

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
+import {Controller, Get, Post, Delete, Body, Param, Query} from '@nestjs/common';
 import { RestaurantService } from './Restaurant.service';
 import { Restaurant } from './Restaurant';
 
@@ -35,4 +35,18 @@ export class RestaurantController {
     getFavorites(): Restaurant[] {
         return this.restaurantService.getFavorites();
     }
+
+    @Get('/by-city')
+    getRestaurantsByCity(
+        @Query('city') city: string,
+        @Query('postalCode') postalCode: number
+    ): Restaurant[] {
+        return this.restaurantService.findByCityAndPostalCode(city, postalCode);
+    }
+
+    @Get('/by-name/:name')
+    getRestaurantByName(@Param('name') name: string): Restaurant | undefined {
+        return this.restaurantService.findByName(name);
+    }
 }
+
