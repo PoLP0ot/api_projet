@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+    import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Restaurant } from './Restaurant';
 //import { promises as fs } from 'fs';
 import { HttpService } from '@nestjs/axios';
@@ -28,7 +28,7 @@ export class RestaurantService implements OnModuleInit {
         return firstValueFrom(
             this.httpService.get('https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?limit=20').pipe(
                 map(response => response.data),
-                tap((restaurants: any[]) => {
+                tap((restaurants: Array<Restaurant>) => {
                     restaurants.forEach(restaurantData => {
                         const restaurant = new Restaurant({
                             nomoffre: restaurantData.nomoffre,
