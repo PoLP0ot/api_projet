@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { RestaurantModule } from './restaurant.module';
+import { RestaurantModule } from './Restaurant.module';
 import { ValidationPipe } from '@nestjs/common';
 
 //fichier main
