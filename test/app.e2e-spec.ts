@@ -34,14 +34,55 @@ describe('RestaurantModule', () => {
         longitude: -1.553621,
         commtel: '0240123456',
         commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com'
+        commweb: 'www.chezmireille.com',
+        // Ajout des autres propriétés
+        cedex: null,
+        spbureaudistributeur: null,
+        codeinseecommune: 12345,
+        acces: null,
+        commmob: null,
+        commfax: null,
+        videosurl: null,
+        plateformeurl: null,
+        tripadwidget: null,
+        spvideosembed: null,
+        classementguides: null,
+        labelsclassementlogis: null,
+        labeltourismehandicap: null,
+        animauxacceptes: null,
+        animauxinfo: null,
+        labels: null,
+        services: null,
+        capacitenbcouverts: null,
+        capacitenbsalles: null,
+        capacitenbcouvertsterrasse: null,
+        capacitenbsallesreunion: null,
+        capacitenbsallesclim: null,
+        spaccueilveloiti: null,
+        languesparleesaccueil: null,
+        accueilgroupe: null,
+        accueilgroupemin: null,
+        accueilgroupemax: null,
+        ouverturealannee: null,
+        ouverturegranule: null,
+        resadirecte: null,
+        resaenligneouinon: null,
+        resaenligne: null,
+        tarifs: null,
+        modepaiement: null,
+        localisation: {
+          lon: -1.553621,
+          lat: 47.218371
+        },
+        departement: 'Loire-Atlantique'
       };
-      service.addRestaurant(restaurantDTo);
-      expect(service.findAll()).toContain(restaurantDTo);
+      const restaurant = new Restaurant(restaurantDTO);
+      service.addRestaurant(restaurant);
+      expect(service.findAll()).toContain(restaurant);
     });
 
     it('should delete a restaurant', () => {
-      const restaurantDTo :RestaurantDTO={
+      const restaurantDTO : RestaurantDTO={
         nomoffre: 'Chez Mireille',
         type: 'Café',
         categorie: 'Café et Thé',
@@ -54,11 +95,52 @@ describe('RestaurantModule', () => {
         longitude: -1.553621,
         commtel: '0240123456',
         commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com'
+        commweb: 'www.chezmireille.com',
+        // Ajout des autres propriétés
+        cedex: null,
+        spbureaudistributeur: null,
+        codeinseecommune: 12345,
+        acces: null,
+        commmob: null,
+        commfax: null,
+        videosurl: null,
+        plateformeurl: null,
+        tripadwidget: null,
+        spvideosembed: null,
+        classementguides: null,
+        labelsclassementlogis: null,
+        labeltourismehandicap: null,
+        animauxacceptes: null,
+        animauxinfo: null,
+        labels: null,
+        services: null,
+        capacitenbcouverts: null,
+        capacitenbsalles: null,
+        capacitenbcouvertsterrasse: null,
+        capacitenbsallesreunion: null,
+        capacitenbsallesclim: null,
+        spaccueilveloiti: null,
+        languesparleesaccueil: null,
+        accueilgroupe: null,
+        accueilgroupemin: null,
+        accueilgroupemax: null,
+        ouverturealannee: null,
+        ouverturegranule: null,
+        resadirecte: null,
+        resaenligneouinon: null,
+        resaenligne: null,
+        tarifs: null,
+        modepaiement: null,
+        localisation: {
+          lon: -1.553621,
+          lat: 47.218371
+        },
+        departement: 'Loire-Atlantique'
       };
-      service.addRestaurant(restaurantDTo);
+      const restaurant = new Restaurant(restaurantDTO);
+      service.addRestaurant(restaurant);
       expect(service.deleteRestaurant('Chez Mireille')).toBe('Restaurant supprimé avec succès');
-      expect(service.findAll()).not.toContain(restaurantDTo);
+      expect(service.findAll()).not.toContain(restaurant);
     });
 
     // ... autres tests pour le service...
@@ -67,7 +149,7 @@ describe('RestaurantModule', () => {
   // Tests pour RestaurantController
   describe('RestaurantController', () => {
     it('should add a restaurant', () => {
-      const restaurantDTO : Restaurant={
+      const restaurantDTO : RestaurantDTO={
         nomoffre: 'Chez Mireille',
         type: 'Café',
         categorie: 'Café et Thé',
@@ -80,10 +162,51 @@ describe('RestaurantModule', () => {
         longitude: -1.553621,
         commtel: '0240123456',
         commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com'
+        commweb: 'www.chezmireille.com',
+        // Ajout des autres propriétés
+        cedex: null,
+        spbureaudistributeur: null,
+        codeinseecommune: 12345,
+        acces: null,
+        commmob: null,
+        commfax: null,
+        videosurl: null,
+        plateformeurl: null,
+        tripadwidget: null,
+        spvideosembed: null,
+        classementguides: null,
+        labelsclassementlogis: null,
+        labeltourismehandicap: null,
+        animauxacceptes: null,
+        animauxinfo: null,
+        labels: null,
+        services: null,
+        capacitenbcouverts: null,
+        capacitenbsalles: null,
+        capacitenbcouvertsterrasse: null,
+        capacitenbsallesreunion: null,
+        capacitenbsallesclim: null,
+        spaccueilveloiti: null,
+        languesparleesaccueil: null,
+        accueilgroupe: null,
+        accueilgroupemin: null,
+        accueilgroupemax: null,
+        ouverturealannee: null,
+        ouverturegranule: null,
+        resadirecte: null,
+        resaenligneouinon: null,
+        resaenligne: null,
+        tarifs: null,
+        modepaiement: null,
+        localisation: {
+          lon: -1.553621,
+          lat: 47.218371
+        },
+        departement: 'Loire-Atlantique'
       };
+      const restaurant = new Restaurant(restaurantDTO);
       jest.spyOn(service, 'addRestaurant').mockImplementation(() => 'Restaurant ajouté avec succès');
-      expect(controller.addRestaurant(restaurantDTO)).toBe('Restaurant ajouté avec succès');
+      expect(controller.addRestaurant(restaurant)).toBe('Restaurant ajouté avec succès');
     });
 
     it('should delete a restaurant', () => {
