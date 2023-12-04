@@ -21,20 +21,28 @@ export class RestaurantService implements OnModuleInit {
 
 
     private async loadRestaurantsFromServer(): Promise<void> {
-            return firstValueFrom(
-                this.httpService.get('https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?limit=20').pipe(
-                    map(response => response.data.records.map(record => record.fields)),
-                    tap((restaurants: RestaurantDTO[]) => {
-                        restaurants.forEach(restaurantData => {
-                            const restaurant = new Restaurant(restaurantData);
-                            this.addRestaurant(restaurant);
-                        });
-                    }),
-                    map(() => undefined),
-                ),
-
-            );
-        }
+        return firstValueFrom(
+            this.httpService.get('https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?limit=20').pipe(
+                map(response => {
+                    // Vérification de l'existence de response.data.records
+                    if (response.data && response.data.records) {
+                        return response.data.records.map(record => record.fields);
+                    } else {
+                        // Gérer le cas où response.data.records est undefined ou n'a pas la structure attendue
+                        console.error('Données inattendues de l\'API:', response);
+                        return [];
+                    }
+                }),
+                tap((restaurants: RestaurantDTO[]) => {
+                    restaurants.forEach(restaurantData => {
+                        const restaurant = new Restaurant(restaurantData);
+                        this.addRestaurant(restaurant);
+                    });
+                }),
+                map(() => undefined),
+            ),
+        );
+    }
 
     private computeCompleteAddress(data: any): string {
         return data.adresse1 || data.adresse2 || data.adresse3;
