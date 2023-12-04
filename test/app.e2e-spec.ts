@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { RestaurantController } from '../src/Restaurant.controller';
 import { RestaurantService } from '../src/Restaurant.service';
 import { Restaurant } from '../src/Restaurant';
+import { RestaurantDTO } from '../src/RestaurantDTO';
 
 describe('RestaurantModule', () => {
   let controller: RestaurantController;
@@ -20,7 +21,7 @@ describe('RestaurantModule', () => {
   // Tests pour RestaurantService
   describe('RestaurantService', () => {
     it('should add a restaurant', () => {
-      const restaurant = new Restaurant({
+      const restaurantDTO : RestaurantDTO={
         nomoffre: 'Chez Mireille',
         type: 'Café',
         categorie: 'Café et Thé',
@@ -34,13 +35,13 @@ describe('RestaurantModule', () => {
         commtel: '0240123456',
         commmail: 'contact@chezmireille.com',
         commweb: 'www.chezmireille.com'
-      });
-      service.addRestaurant(restaurant);
-      expect(service.findAll()).toContain(restaurant);
+      };
+      service.addRestaurant(restaurantDTo);
+      expect(service.findAll()).toContain(restaurantDTo);
     });
 
     it('should delete a restaurant', () => {
-      const restaurant = new Restaurant({
+      const restaurantDTo :RestaurantDTO={
         nomoffre: 'Chez Mireille',
         type: 'Café',
         categorie: 'Café et Thé',
@@ -54,10 +55,10 @@ describe('RestaurantModule', () => {
         commtel: '0240123456',
         commmail: 'contact@chezmireille.com',
         commweb: 'www.chezmireille.com'
-      });
-      service.addRestaurant(restaurant);
+      };
+      service.addRestaurant(restaurantDTo);
       expect(service.deleteRestaurant('Chez Mireille')).toBe('Restaurant supprimé avec succès');
-      expect(service.findAll()).not.toContain(restaurant);
+      expect(service.findAll()).not.toContain(restaurantDTo);
     });
 
     // ... autres tests pour le service...
@@ -66,7 +67,7 @@ describe('RestaurantModule', () => {
   // Tests pour RestaurantController
   describe('RestaurantController', () => {
     it('should add a restaurant', () => {
-      const restaurant = new Restaurant({
+      const restaurantDTO : Restaurant={
         nomoffre: 'Chez Mireille',
         type: 'Café',
         categorie: 'Café et Thé',
@@ -80,9 +81,9 @@ describe('RestaurantModule', () => {
         commtel: '0240123456',
         commmail: 'contact@chezmireille.com',
         commweb: 'www.chezmireille.com'
-      });
+      };
       jest.spyOn(service, 'addRestaurant').mockImplementation(() => 'Restaurant ajouté avec succès');
-      expect(controller.addRestaurant(restaurant)).toBe('Restaurant ajouté avec succès');
+      expect(controller.addRestaurant(restaurantDTO)).toBe('Restaurant ajouté avec succès');
     });
 
     it('should delete a restaurant', () => {
