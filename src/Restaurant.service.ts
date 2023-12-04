@@ -24,11 +24,67 @@ export class RestaurantService implements OnModuleInit {
         return firstValueFrom(
             this.httpService.get('https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?limit=20').pipe(
                 map(response => {
-                    // Vérification de l'existence de response.data.records
-                    if (response.data && response.data.records) {
-                        return response.data.records.map(record => record.fields);
+                    // Vérification de l'existence de response.data et response.data.results
+                    if (response.data && response.data.results) {
+                        console.log(`Total de restaurants disponibles: ${response.data.total_count}`);
+                        return response.data.results.map(record => {
+                            // Création d'un objet RestaurantDTO à partir de chaque enregistrement
+                            const restaurantData: RestaurantDTO = {
+
+                                nomoffre: record.nomoffre,
+                                type: record.type,
+                                categorie: record.categorie,
+                                adresse1: record.adresse1,
+                                adresse2: record.adresse2,
+                                adresse3: record.adresse3,
+                                codepostal: record.codepostal,
+                                cedex: record.cedex,
+                                spbureaudistributeur: record.spbureaudistributeur,
+                                commune: record.commune,
+                                codeinseecommune: record.codeinseecommune,
+                                latitude: record.latitude,
+                                longitude: record.longitude,
+                                acces: record.acces,
+                                commmob: record.commmob,
+                                commtel: record.commtel,
+                                commfax: record.commfax,
+                                commmail: record.commmail,
+                                commweb: record.commweb,
+                                videosurl: record.videosurl,
+                                plateformeurl: record.plateformeurl,
+                                tripadwidget: record.tripadwidget,
+                                spvideosembed: record.spvideosembed,
+                                classementguides: record.classementguides,
+                                labelsclassementlogis: record.labelsclassementlogis,
+                                labeltourismehandicap: record.labeltourismehandicap,
+                                animauxacceptes: record.animauxacceptes,
+                                animauxinfo: record.animauxinfo,
+                                labels: record.labels,
+                                services: record.services,
+                                capacitenbcouverts: record.capacitenbcouverts,
+                                capacitenbsalles: record.capacitenbsalles,
+                                capacitenbcouvertsterrasse: record.capacitenbcouvertsterrasse,
+                                capacitenbsallesreunion: record.capacitenbsallesreunion,
+                                capacitenbsallesclim: record.capacitenbsallesclim,
+                                spaccueilveloiti: record.spaccueilveloiti,
+                                languesparleesaccueil: record.languesparleesaccueil,
+                                accueilgroupe: record.accueilgroupe,
+                                accueilgroupemin: record.accueilgroupemin,
+                                accueilgroupemax: record.accueilgroupemax,
+                                ouverturealannee: record.ouverturealannee,
+                                ouverturegranule: record.ouverturegranule,
+                                resadirecte: record.resadirecte,
+                                resaenligneouinon: record.resaenligneouinon,
+                                resaenligne: record.resaenligne,
+                                tarifs: record.tarifs,
+                                modepaiement: record.modepaiement,
+                                localisation: record.localisation,
+                                departement: record.departement,
+                            };
+                            return restaurantData;
+                        });
                     } else {
-                        // Gérer le cas où response.data.records est undefined ou n'a pas la structure attendue
+                        // Gérer le cas où response.data.results est undefined ou n'a pas la structure attendue
                         console.error('Données inattendues de l\'API:', response);
                         return [];
                     }
