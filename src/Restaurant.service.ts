@@ -22,7 +22,7 @@ export class RestaurantService implements OnModuleInit {
 
     private async loadRestaurantsFromServer(): Promise<void> {
         return firstValueFrom(
-            this.httpService.get('https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?limit=3200').pipe(
+            this.httpService.get('https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?limit=100').pipe(
                 map(response => {
                     // Vérification de l'existence de response.data et response.data.results
                     if (response.data && response.data.results) {
