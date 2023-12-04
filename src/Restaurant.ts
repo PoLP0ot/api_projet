@@ -1,5 +1,6 @@
 import { IsString, IsNotEmpty, IsOptional,  IsLatitude, IsLongitude, IsInt } from 'class-validator';
 import { Type } from 'class-transformer';
+import { RestaurantDTO } from './RestaurantDTO';
 
 export class Restaurant {
     @IsNotEmpty()
@@ -84,33 +85,31 @@ export class Restaurant {
 
     private getCompleteAdresse(): string {
         // Retourne 'adresse1' si elle n'est pas vide, sinon 'adresse2'
-        this.adressecomplete = this.adresse1 || this.adresse2;
-        return
+        this.adressecomplete = this.adresse1 || this.adresse2 || this.adresse3;
+        return this.adressecomplete;
     }
 
-    constructor(data?: any) {
-        if (data) {
-
-            this.nomoffre = data.nomoffre;
-            this.type = data.type;
-            this.categorie = data.categorie;
-            this.adresse1 = data.adresse1;
-            this.adresse2 = data.adresse2;
-            this.adresse3 = data.adresse3;
-            this.codepostal = data.codepostal;
-            this.commune = data.commune;
-            this.latitude = data.latitude;
-            this.longitude = data.longitude;
-            this.commtel = data.commtel;
-            this.commmail = data.commmail;
-            this.commweb = data.commweb;
-            this.videosurl = data.videosurl;
-            this.plateformeurl = data.plateformeurl;
-            this.languesparleesaccueil = data.languesparleesaccueil;
-            this.accueilgroupe = data.accueilgroupe;
-            this.tarifs = data.tarifs;
-            this.modepaiement = data.modepaiement;
-            this.adressecomplete = this.getCompleteAdresse();
-        }
+    constructor(restaurantData: RestaurantDTO) {
+        this.nomoffre = restaurantData.nomoffre;
+        this.type = restaurantData.type;
+        this.categorie = restaurantData.categorie;
+        this.adresse1 = restaurantData.adresse1;
+        this.adresse2 = restaurantData.adresse2;
+        this.adresse3 = restaurantData.adresse3;
+        this.codepostal = restaurantData.codepostal;
+        this.commune = restaurantData.commune;
+        this.latitude = restaurantData.latitude;
+        this.longitude = restaurantData.longitude;
+        this.commtel = restaurantData.commtel;
+        this.commmail = restaurantData.commmail;
+        this.commweb = restaurantData.commweb;
+        this.videosurl = restaurantData.videosurl;
+        this.plateformeurl = restaurantData.plateformeurl;
+        this.languesparleesaccueil = restaurantData.languesparleesaccueil;
+        this.accueilgroupe = restaurantData.accueilgroupe;
+        this.tarifs = restaurantData.tarifs;
+        this.modepaiement = restaurantData.modepaiement;
+        this.adressecomplete = this.getCompleteAdresse();
     }
+
 }
