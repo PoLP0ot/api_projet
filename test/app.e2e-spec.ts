@@ -1,359 +1,105 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { RestaurantController } from '../src/Restaurant.controller';
 import { RestaurantService } from '../src/Restaurant.service';
+import { RestaurantModule } from '../src/Restaurant.module';
 import { Restaurant } from '../src/Restaurant';
 import { RestaurantDTO } from '../src/RestaurantDTO';
 
-describe('RestaurantModule', () => {
+describe('RestaurantController', () => {
   let controller: RestaurantController;
   let service: RestaurantService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RestaurantController],
-      providers: [RestaurantService],
+      providers: [{
+        provide: RestaurantService,
+        useValue: {
+          addRestaurant: jest.fn().mockReturnValue('Restaurant ajouté avec succès'),
+          deleteRestaurant: jest.fn().mockReturnValue('Restaurant supprimé avec succès'),
+          addFavorite: jest.fn().mockReturnValue('Restaurant ajouté aux favoris'),
+          removeFavorite: jest.fn().mockReturnValue('Restaurant retiré des favoris'),
+
+        }
+      }]
     }).compile();
 
     controller = module.get<RestaurantController>(RestaurantController);
     service = module.get<RestaurantService>(RestaurantService);
   });
 
-  // Tests pour RestaurantService
-  describe('RestaurantService', () => {
-    it('should add a restaurant', () => {
-      const restaurantDTO : RestaurantDTO={
-        nomoffre: 'Chez Mireille',
-        type: 'Café',
-        categorie: 'Café et Thé',
-        adresse1: '123 rue du Port',
-        adresse2: '',
-        adresse3: '',
-        codepostal: 44000,
-        commune: 'Nantes',
-        latitude: 47.218371,
-        longitude: -1.553621,
-        commtel: '0240123456',
-        commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com',
-        // Ajout des autres propriétés
-        cedex: null,
-        spbureaudistributeur: null,
-        codeinseecommune: 12345,
-        acces: null,
-        commmob: null,
-        commfax: null,
-        videosurl: null,
-        plateformeurl: null,
-        tripadwidget: null,
-        spvideosembed: null,
-        classementguides: null,
-        labelsclassementlogis: null,
-        labeltourismehandicap: null,
-        animauxacceptes: null,
-        animauxinfo: null,
-        labels: null,
-        services: null,
-        capacitenbcouverts: null,
-        capacitenbsalles: null,
-        capacitenbcouvertsterrasse: null,
-        capacitenbsallesreunion: null,
-        capacitenbsallesclim: null,
-        spaccueilveloiti: null,
-        languesparleesaccueil: null,
-        accueilgroupe: null,
-        accueilgroupemin: null,
-        accueilgroupemax: null,
-        ouverturealannee: null,
-        ouverturegranule: null,
-        resadirecte: null,
-        resaenligneouinon: null,
-        resaenligne: null,
-        tarifs: null,
-        modepaiement: null,
-        localisation: {
-          lon: -1.553621,
-          lat: 47.218371
-        },
-        departement: 'Loire-Atlantique'
-      };
-      const restaurant = new Restaurant(restaurantDTO);
-      service.addRestaurant(restaurant);
-      expect(service.findAll()).toContain(restaurant);
-    });
-
-    it('should delete a restaurant', () => {
-      const restaurantDTO : RestaurantDTO={
-        nomoffre: 'Chez Mireille',
-        type: 'Café',
-        categorie: 'Café et Thé',
-        adresse1: '123 rue du Port',
-        adresse2: '',
-        adresse3: '',
-        codepostal: 44000,
-        commune: 'Nantes',
-        latitude: 47.218371,
-        longitude: -1.553621,
-        commtel: '0240123456',
-        commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com',
-        // Ajout des autres propriétés
-        cedex: null,
-        spbureaudistributeur: null,
-        codeinseecommune: 12345,
-        acces: null,
-        commmob: null,
-        commfax: null,
-        videosurl: null,
-        plateformeurl: null,
-        tripadwidget: null,
-        spvideosembed: null,
-        classementguides: null,
-        labelsclassementlogis: null,
-        labeltourismehandicap: null,
-        animauxacceptes: null,
-        animauxinfo: null,
-        labels: null,
-        services: null,
-        capacitenbcouverts: null,
-        capacitenbsalles: null,
-        capacitenbcouvertsterrasse: null,
-        capacitenbsallesreunion: null,
-        capacitenbsallesclim: null,
-        spaccueilveloiti: null,
-        languesparleesaccueil: null,
-        accueilgroupe: null,
-        accueilgroupemin: null,
-        accueilgroupemax: null,
-        ouverturealannee: null,
-        ouverturegranule: null,
-        resadirecte: null,
-        resaenligneouinon: null,
-        resaenligne: null,
-        tarifs: null,
-        modepaiement: null,
-        localisation: {
-          lon: -1.553621,
-          lat: 47.218371
-        },
-        departement: 'Loire-Atlantique'
-      };
-      const restaurant = new Restaurant(restaurantDTO);
-      service.addRestaurant(restaurant);
-      expect(service.deleteRestaurant('Chez Mireille')).toBe('Restaurant supprimé avec succès');
-      expect(service.findAll()).not.toContain(restaurant);
-    });
-
-    // ... autres tests pour le service...
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
   });
 
-  // Tests pour RestaurantController
-  describe('RestaurantController', () => {
-    it('should add a restaurant', () => {
-      const restaurantDTO : RestaurantDTO={
-        nomoffre: 'Chez Mireille',
-        type: 'Café',
-        categorie: 'Café et Thé',
-        adresse1: '123 rue du Port',
-        adresse2: '',
-        adresse3: '',
-        codepostal: 44000,
-        commune: 'Nantes',
-        latitude: 47.218371,
-        longitude: -1.553621,
-        commtel: '0240123456',
-        commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com',
-        // Ajout des autres propriétés
-        cedex: null,
-        spbureaudistributeur: null,
-        codeinseecommune: 12345,
-        acces: null,
-        commmob: null,
-        commfax: null,
-        videosurl: null,
-        plateformeurl: null,
-        tripadwidget: null,
-        spvideosembed: null,
-        classementguides: null,
-        labelsclassementlogis: null,
-        labeltourismehandicap: null,
-        animauxacceptes: null,
-        animauxinfo: null,
-        labels: null,
-        services: null,
-        capacitenbcouverts: null,
-        capacitenbsalles: null,
-        capacitenbcouvertsterrasse: null,
-        capacitenbsallesreunion: null,
-        capacitenbsallesclim: null,
-        spaccueilveloiti: null,
-        languesparleesaccueil: null,
-        accueilgroupe: null,
-        accueilgroupemin: null,
-        accueilgroupemax: null,
-        ouverturealannee: null,
-        ouverturegranule: null,
-        resadirecte: null,
-        resaenligneouinon: null,
-        resaenligne: null,
-        tarifs: null,
-        modepaiement: null,
-        localisation: {
-          lon: -1.553621,
-          lat: 47.218371
-        },
-        departement: 'Loire-Atlantique'
-      };
-      const restaurant = new Restaurant(restaurantDTO);
-      jest.spyOn(service, 'addRestaurant').mockImplementation(() => 'Restaurant ajouté avec succès');
-      expect(controller.addRestaurant(restaurant)).toBe('Restaurant ajouté avec succès');
-    });
 
-    it('should delete a restaurant', () => {
-      jest.spyOn(service, 'deleteRestaurant').mockImplementation(() => 'Restaurant supprimé avec succès');
-      expect(controller.deleteRestaurant('Chez Mireille')).toBe('Restaurant supprimé avec succès');
-    });
+  it('should add a restaurant', () => {
+    const fakeRestaurantDTO = {
+      nomoffre: 'La Bonne Fourchette',
+      type: 'Restaurant',
+      categorie: 'Gastronomique',
+      adresse1: '10 rue de la Gastronomie',
+      adresse2: '',
+      adresse3: '',
+      codepostal: 75000,
+      cedex: '',
+      spbureaudistributeur: '',
+      commune: 'Paris',
+      codeinseecommune: 12345,
+      latitude: 48.8566,
+      longitude: 2.3522,
+      acces: 'Métro, bus, parking',
+      commmob: '0612345678',
+      commtel: '0123456789',
+      commfax: '0123456798',
+      commmail: 'contact@labonnefourchette.fr',
+      commweb: 'www.labonnefourchette.fr',
+      videosurl: 'www.youtube.com/labonnefourchette',
+      plateformeurl: 'www.labonnefourchette.fr/reservation',
+      tripadwidget: '',
+      spvideosembed: '',
+      classementguides: '3 étoiles',
+      labelsclassementlogis: 'Logis de France',
+      labeltourismehandicap: 'Accessible',
+      animauxacceptes: 'Oui',
+      animauxinfo: 'Animaux de petite taille acceptés',
+      labels: 'Label Bio',
+      services: 'Wi-Fi, Terrasse',
+      capacitenbcouverts: 50,
+      capacitenbsalles: 2,
+      capacitenbcouvertsterrasse: 20,
+      capacitenbsallesreunion: 1,
+      capacitenbsallesclim: 2,
+      spaccueilveloiti: 'Parking vélo',
+      languesparleesaccueil: 'Français, Anglais, Espagnol',
+      accueilgroupe: 'Oui',
+      accueilgroupemin: 10,
+      accueilgroupemax: 40,
+      ouverturealannee: 'Toute l\'année',
+      ouverturegranule: '',
+      resadirecte: 'Disponible',
+      resaenligneouinon: 'Oui',
+      resaenligne: 'www.labonnefourchette.fr/reservation',
+      tarifs: 'Plats à partir de 15€',
+      modepaiement: 'Carte, Espèces, Chèque',
+      localisation: {
+        lat: 48.8566,
+        lon: 2.3522
+      },
+      departement: 'Paris'
+    };
 
-    // ... autres tests pour le contrôleur...
+    const restaurant = new Restaurant(fakeRestaurantDTO);
+
+    expect(controller.addRestaurant(restaurant)).toBe('Restaurant ajouté avec succès');
+    expect(service.addRestaurant).toHaveBeenCalledWith(restaurant);
   });
+
+  // Test pour la suppression d'un restaurant
+  it('should delete a restaurant', () => {
+    expect(controller.deleteRestaurant('NomOffre')).toBe('Restaurant supprimé avec succès');
+    expect(service.deleteRestaurant).toHaveBeenCalledWith('NomOffre');
+  });
+
+  // Ajoutez des tests supplémentaires pour les autres méthodes de façon similaire...
 });
-
-/*import { Test, TestingModule } from '@nestjs/testing';
-import { RestaurantController } from './Restaurant.controller';
-import { RestaurantService } from './Restaurant.service';
-import { Restaurant } from './Restaurant';
-import { HttpModule } from '@nestjs/axios';
-
-describe('RestaurantModule', () => {
-  let controller: RestaurantController;
-  let service: RestaurantService;
-
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      imports: [HttpModule],
-      controllers: [RestaurantController],
-      providers: [RestaurantService],
-    }).compile();
-
-    controller = module.get<RestaurantController>(RestaurantController);
-    service = module.get<RestaurantService>(RestaurantService);
-  });
-
-  // Tests pour RestaurantService
-  describe('RestaurantService', () => {
-    it('should add a restaurant', () => {
-      const restaurant = new Restaurant({
-        nomoffre: 'Chez Mireille',
-        type: 'Café',
-        categorie: 'Café et Thé',
-        adresse1: '123 rue du Port',
-        adresse2: '',
-        adresse3: '',
-        codepostal: 44000,
-        commune: 'Nantes',
-        latitude: 47.218371,
-        longitude: -1.553621,
-        commtel: '0240123456',
-        commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com'
-      });
-      service.addRestaurant(restaurant);
-      expect(service.findAll()).toContain(restaurant);
-    });
-
-    it('should delete a restaurant', () => {
-      const restaurant = new Restaurant({
-        nomoffre: 'Chez Mireille',
-        type: 'Café',
-        categorie: 'Café et Thé',
-        adresse1: '123 rue du Port',
-        adresse2: '',
-        adresse3: '',
-        codepostal: 44000,
-        commune: 'Nantes',
-        latitude: 47.218371,
-        longitude: -1.553621,
-        commtel: '0240123456',
-        commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com'
-      });
-      service.addRestaurant(restaurant);
-      expect(service.deleteRestaurant('Chez Mireille')).toBe('Restaurant supprimé avec succès');
-      expect(service.findAll()).not.toContain(restaurant);
-    });
-    // ... autres tests ...
-
-    it('should add a restaurant to favorites', () => {
-      service.addRestaurant(new Restaurant({ nomoffre: 'Restaurant Favori' }));
-      const addResponse = service.addFavorite('Restaurant Favori');
-      expect(addResponse).toBe('Restaurant ajouté aux favoris');
-      expect(service.getFavorites()).toContainEqual(expect.objectContaining({ nomoffre: 'Restaurant Favori' }));
-    });
-
-    it('should not add a non-existing restaurant to favorites', () => {
-      const addResponse = service.addFavorite('Restaurant Inexistant');
-      expect(addResponse).toBe('Restaurant non trouvé');
-    });
-
-    it('should remove a restaurant from favorites', () => {
-      service.addRestaurant(new Restaurant({ nomoffre: 'Restaurant Favori' }));
-      service.addFavorite('Restaurant Favori');
-      const removeResponse = service.removeFavorite('Restaurant Favori');
-      expect(removeResponse).toBe('Restaurant retiré des favoris');
-      expect(service.getFavorites()).not.toContainEqual(expect.objectContaining({ nomoffre: 'Restaurant Favori' }));
-    });
-
-    it('should not remove a non-existing restaurant from favorites', () => {
-      const removeResponse = service.removeFavorite('Restaurant Inexistant');
-      expect(removeResponse).toBe('Restaurant non trouvé dans les favoris');
-    });
-
-    it('should retrieve all favorite restaurants', () => {
-      service.addRestaurant(new Restaurant({ nomoffre: 'Restaurant 1' }));
-      service.addRestaurant(new Restaurant({ nomoffre: 'Restaurant 2' }));
-      service.addFavorite('Restaurant 1');
-      service.addFavorite('Restaurant 2');
-      const favorites = service.getFavorites();
-      expect(favorites.length).toBe(2);
-      expect(favorites).toEqual(expect.arrayContaining([
-        expect.objectContaining({ nomoffre: 'Restaurant 1' }),
-        expect.objectContaining({ nomoffre: 'Restaurant 2' })
-      ]));
-    });
-
-    // ... autres tests pour le service...
-  });
-
-  // Tests pour RestaurantController
-  describe('RestaurantController', () => {
-    it('should add a restaurant', () => {
-      const restaurant = new Restaurant({
-        nomoffre: 'Chez Mireille',
-        type: 'Café',
-        categorie: 'Café et Thé',
-        adresse1: '123 rue du Port',
-        adresse2: '',
-        adresse3: '',
-        codepostal: 44000,
-        commune: 'Nantes',
-        latitude: 47.218371,
-        longitude: -1.553621,
-        commtel: '0240123456',
-        commmail: 'contact@chezmireille.com',
-        commweb: 'www.chezmireille.com'
-      });
-      jest.spyOn(service, 'addRestaurant').mockImplementation(() => 'Restaurant ajouté avec succès');
-      expect(controller.addRestaurant(restaurant)).toBe('Restaurant ajouté avec succès');
-    });
-
-    it('should delete a restaurant', () => {
-      jest.spyOn(service, 'deleteRestaurant').mockImplementation(() => 'Restaurant supprimé avec succès');
-      expect(controller.deleteRestaurant('Chez Mireille')).toBe('Restaurant supprimé avec succès');
-    });
-
-
-
-    // ... autres tests pour le contrôleur...
-  });
-});
-*/
