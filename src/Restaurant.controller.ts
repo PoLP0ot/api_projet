@@ -1,4 +1,4 @@
-import {Controller, Get, Post, Delete, Body, Param, Query} from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param, Query } from '@nestjs/common';
 import { RestaurantService } from './Restaurant.service';
 import { Restaurant } from './Restaurant';
 
@@ -16,19 +16,19 @@ export class RestaurantController {
         return this.restaurantService.addRestaurant(restaurant);
     }
 
-    @Delete('/:name')
-    deleteRestaurant(@Param('name') name: string): string {
-        return this.restaurantService.deleteRestaurant(name);
+    @Delete('/:nomoffre')
+    deleteRestaurant(@Param('nomoffre') nomoffre: string): string {
+        return this.restaurantService.deleteRestaurant(nomoffre);
     }
 
-    @Post('favorites/:restaurantId')
-    addFavorite(@Param('restaurantId') restaurantId: string): string {
-        return this.restaurantService.addFavorite(restaurantId);
+    @Post('favorites/:nomoffre')
+    addFavorite(@Param('nomoffre') nomoffre: string): string {
+        return this.restaurantService.addFavorite(nomoffre);
     }
 
-    @Delete('favorites/:restaurantId')
-    removeFavorite(@Param('restaurantId') restaurantId: string): string {
-        return this.restaurantService.removeFavorite(restaurantId);
+    @Delete('favorites/:nomoffre')
+    removeFavorite(@Param('nomoffre') nomoffre: string): string {
+        return this.restaurantService.removeFavorite(nomoffre);
     }
 
     @Get('favorites')
@@ -36,17 +36,16 @@ export class RestaurantController {
         return this.restaurantService.getFavorites();
     }
 
-    @Get('/by-city')
+    @Get('/commune')
     getRestaurantsByCity(
-        @Query('city') city: string,
-        @Query('postalCode') postalCode: number
+        @Query('commune') commune: string,
+        @Query('codepostal') postalCode: number
     ): Restaurant[] {
-        return this.restaurantService.findByCityAndPostalCode(city, postalCode);
+        return this.restaurantService.findByCityAndPostalCode(commune, postalCode);
     }
 
-    @Get('/by-name/:name')
-    getRestaurantByName(@Param('name') name: string): Restaurant | undefined {
-        return this.restaurantService.findByName(name);
+    @Get('/nomoffre/:nomoffre')
+    getRestaurantByName(@Param('nomoffre') nomoffre: string): Restaurant | undefined {
+        return this.restaurantService.findByName(nomoffre);
     }
 }
-

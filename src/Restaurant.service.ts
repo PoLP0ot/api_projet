@@ -116,14 +116,14 @@ export class RestaurantService implements OnModuleInit {
         return Array.from(this.restaurants.values());
     }
 
-    findByCityAndPostalCode(city: string, postalCode: number): Restaurant[] {
+    findByCityAndPostalCode(commune: string, codepostal: number): Restaurant[] {
         return Array.from(this.restaurants.values()).filter(restaurant =>
-            restaurant.commune === city && restaurant.codepostal === postalCode
+            restaurant.commune === commune && restaurant.codepostal === codepostal
         );
     }
 
-    findByName(name: string): Restaurant | undefined {
-        return this.restaurants.get(name);
+    findByName(nomoffre: string): Restaurant | undefined {
+        return this.restaurants.get(nomoffre);
     }
 
     addRestaurant(restaurant: Restaurant): string {
@@ -131,21 +131,21 @@ export class RestaurantService implements OnModuleInit {
         return 'Restaurant ajouté avec succès';
     }
 
-    deleteRestaurant(name: string): string {
-        if (this.restaurants.has(name)) {
-            this.restaurants.delete(name);
+    deleteRestaurant(nomoffre: string): string {
+        if (this.restaurants.has(nomoffre)) {
+            this.restaurants.delete(nomoffre);
             return 'Restaurant supprimé avec succès';
         } else {
             return 'Restaurant non trouvé';
         }
     }
 
-    addFavorite(nomOffre: string): string {
-        if (!this.restaurants.has(nomOffre)) {
+    addFavorite(nomoffre: string): string {
+        if (!this.restaurants.has(nomoffre)) {
             return 'Restaurant non trouvé';
         }
-        if (!this.favorites.has(nomOffre)) {
-            this.favorites.add(nomOffre);
+        if (!this.favorites.has(nomoffre)) {
+            this.favorites.add(nomoffre);
             return 'Restaurant ajouté aux favoris';
         }
         return 'Restaurant déjà en favoris';
