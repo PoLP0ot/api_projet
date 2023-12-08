@@ -18,12 +18,96 @@ export class RestaurantService implements OnModuleInit {
         console.log(`Storage contains ${this.restaurants.size} restaurants`);
     }
 
+    private async loadRestaurantsFromServer(): Promise<void> {
+        let start = 0;
+        const limit = 100; // Nombre de restaurants par page
+        let totalRestaurantsToLoad = 300; // Nombre total de restaurants à charger
+
+        do {
+            const url = `https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?start=${start}&limit=${limit}`;
+            await firstValueFrom(
+                this.httpService.get(url).pipe(
+                    map(response => {
+                        if (response.data && response.data.results) {
+                            return response.data.results.map(record => {
+                                const restaurantData: RestaurantDTO = {
+                                    nomoffre: record.nomoffre,
+                                    type: record.type,
+                                    categorie: record.categorie,
+                                    adresse1: record.adresse1,
+                                    adresse2: record.adresse2,
+                                    adresse3: record.adresse3,
+                                    codepostal: record.codepostal,
+                                    cedex: record.cedex,
+                                    spbureaudistributeur: record.spbureaudistributeur,
+                                    commune: record.commune,
+                                    codeinseecommune: record.codeinseecommune,
+                                    latitude: record.latitude,
+                                    longitude: record.longitude,
+                                    acces: record.acces,
+                                    commmob: record.commmob,
+                                    commtel: record.commtel,
+                                    commfax: record.commfax,
+                                    commmail: record.commmail,
+                                    commweb: record.commweb,
+                                    videosurl: record.videosurl,
+                                    plateformeurl: record.plateformeurl,
+                                    tripadwidget: record.tripadwidget,
+                                    spvideosembed: record.spvideosembed,
+                                    classementguides: record.classementguides,
+                                    labelsclassementlogis: record.labelsclassementlogis,
+                                    labeltourismehandicap: record.labeltourismehandicap,
+                                    animauxacceptes: record.animauxacceptes,
+                                    animauxinfo: record.animauxinfo,
+                                    labels: record.labels,
+                                    services: record.services,
+                                    capacitenbcouverts: record.capacitenbcouverts,
+                                    capacitenbsalles: record.capacitenbsalles,
+                                    capacitenbcouvertsterrasse: record.capacitenbcouvertsterrasse,
+                                    capacitenbsallesreunion: record.capacitenbsallesreunion,
+                                    capacitenbsallesclim: record.capacitenbsallesclim,
+                                    spaccueilveloiti: record.spaccueilveloiti,
+                                    languesparleesaccueil: record.languesparleesaccueil,
+                                    accueilgroupe: record.accueilgroupe,
+                                    accueilgroupemin: record.accueilgroupemin,
+                                    accueilgroupemax: record.accueilgroupemax,
+                                    ouverturealannee: record.ouverturealannee,
+                                    ouverturegranule: record.ouverturegranule,
+                                    resadirecte: record.resadirecte,
+                                    resaenligneouinon: record.resaenligneouinon,
+                                    resaenligne: record.resaenligne,
+                                    tarifs: record.tarifs,
+                                    modepaiement: record.modepaiement,
+                                    localisation: record.localisation,
+                                    departement: record.departement,
+                                };
+                                return restaurantData;
+                            });
+                        } else {
+                            console.error('Données inattendues de l\'API:', response);
+                            return [];
+                        }
+                    }),
+                    tap((restaurants: RestaurantDTO[]) => {
+                        restaurants.forEach(restaurantData => {
+                            const restaurant = new Restaurant(restaurantData);
+                            this.addRestaurant(restaurant);
+                        });
+                    })
+                )
+            );
+
+            start += limit;
+        } while (this.restaurants.size < totalRestaurantsToLoad);
+
+        console.log(`Total de restaurants chargés: ${this.restaurants.size}`);
+    }
 
 /*
     private async loadRestaurantsFromServer(): Promise<void> {
         let start = 0;
         const limit = 100; // Nombre de restaurants par page
-        let total = 0;
+        let total = 300;
 
         do {
             const url = `https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?start=${start}&limit=${limit}`;
@@ -106,7 +190,7 @@ export class RestaurantService implements OnModuleInit {
         } while (start < total);
 
         console.log(`Total de restaurants chargés: ${this.restaurants.size}`);
-    }*/
+    }
     private async loadRestaurantsFromServer(): Promise<void> {
         const limit = 100; // Nombre de restaurants à charger
 
@@ -184,7 +268,7 @@ export class RestaurantService implements OnModuleInit {
         );
 
         console.log(`Total de restaurants chargés: ${this.restaurants.size}`);
-    }
+    }*/
 
 
     private computeCompleteAddress(data: any): string {
