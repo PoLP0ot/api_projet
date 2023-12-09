@@ -19,7 +19,7 @@ export class RestaurantService implements OnModuleInit {
         await this.loadRestaurantsFromServer();
         console.log(`Storage contains ${this.restaurants.size} restaurants`);
     }
-    // Méthode pour charger les restaurants depuis le lien
+    // Méthode pour charger les restaurants depuis le lien avec seulement 300 restaurants
     private async loadRestaurantsFromServer(): Promise<void> {
         let start = 0;
         const limit = 100; // Nombre de restaurants par page
