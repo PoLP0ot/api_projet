@@ -83,7 +83,7 @@ export class Restaurant {
     imageUrl: string;
 
     adressecomplete: string;
-
+    // Constructeur de la classe Restaurant.
     constructor(restaurantData: RestaurantDTO) {
         this.nomoffre = restaurantData.nomoffre;
         this.type = restaurantData.type;
@@ -107,17 +107,19 @@ export class Restaurant {
         this.adressecomplete = this.getCompleteAdresse();
         this.imageUrl = this.assignImageUrl(restaurantData.categorie);
     }
-
+    // Méthode pour récupérer l'adresse complète du restaurant.
     private getCompleteAdresse(): string {
         // Retourne 'adresse1' si elle n'est pas vide, sinon 'adresse2'
         this.adressecomplete = this.adresse1 || this.adresse2 || this.adresse3;
         return this.adressecomplete;
     }
-
+    // Méthode pour assigner une image au restaurant en fonction de sa catégorie.
     private assignImageUrl(categorie: string): string {
         return this.getImageUrlForCategory(categorie);
     }
-
+    // Méthode pour récupérer l'URL de l'image en fonction de la catégorie du restaurant.
+    //Nous avons mis en place ce système car la base données ne contient pas d'URL pour les images.
+    //Selon la catégorie du restaurant, nous assignons une image.
     private getImageUrlForCategory(categorie: string): string {
         const categoryImageUrls: { [category: string]: string } = {
             'Bistrot / bar à vin': 'https://us.123rf.com/450wm/benidict83/benidict831912/benidict83191200003/134858243-restauration-de-bistrot-lin%C3%A9aire-rond-avec-verre-%C3%A0-vin.jpg?ver=6',

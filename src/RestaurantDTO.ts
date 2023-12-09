@@ -1,3 +1,4 @@
+//Ici on définit le type de données que l'on va récupérer de l'API
 export interface RestaurantDTO {
     nomoffre: string;
     type: string;
