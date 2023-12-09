@@ -23,7 +23,7 @@ export class RestaurantService implements OnModuleInit {
     private async loadRestaurantsFromServer(): Promise<void> {
         let start = 0;
         const limit = 100; // Nombre de restaurants par page
-        let totalRestaurantsToLoad = 200; // Nombre total de restaurants à charger
+        let totalRestaurantsToLoad = 300; // Nombre total de restaurants à charger
 
         do {
             const url = `https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/234400034_070-008_offre-touristique-restaurants-rpdl@paysdelaloire/records?start=${start}&limit=${limit}`;
