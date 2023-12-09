@@ -1,73 +1,49 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# API Projet - Gestion de Restaurants
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Ce projet est une application NestJS conçue pour gérer un service de restaurants. Elle offre diverses fonctionnalités telles que l'ajout, la suppression, et la récupération de restaurants, ainsi que la gestion des restaurants favoris.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Fonctionnalités
 
-## Description
+### Gestion des Restaurants
+- **Ajouter un Restaurant** : Permet d'ajouter un nouveau restaurant à la liste.
+- **Supprimer un Restaurant** : Supprime un restaurant existant de la liste.
+- **Récupérer des Restaurants** : Récupère la liste de tous les restaurants.
+- **Recherche Avancée** : Recherche de restaurants par nom, ville, et code postal.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Actuellement, l'application est configurée pour récupérer uniquement 300 restaurants pour éviter les problèmes de performance et les crashs. Cependant, une fonctionnalité permettant de récupérer tous les restaurants de la base de données est présente, mais non utilisée dans la configuration actuelle.
+### Favoris
+- **Ajouter aux Favoris** : Ajoute un restaurant à la liste des favoris.
+- **Supprimer des Favoris** : Supprime un restaurant de la liste des favoris.
+- **Récupérer les Favoris** : Récupère la liste des restaurants favoris.
+
+## Architecture du Projet
+
+### Contrôleur des Restaurants (`Restaurant.controller.ts`)
+Gère les requêtes HTTP pour les opérations sur les restaurants, y compris l'ajout, la suppression, et la récupération des restaurants et des favoris.
+
+### Module Restaurant (`Restaurant.module.ts`)
+Configure les dépendances nécessaires pour le contrôleur et le service des restaurants, et importe `HttpModule` pour les requêtes HTTP.
+
+### Service Restaurant (`Restaurant.service.ts`)
+Contient la logique métier pour les opérations sur les restaurants, y compris la gestion des données et des favoris.
+
+### Classe Restaurant (`Restaurant.ts`)
+Définit la structure et les propriétés d'un restaurant, avec des décorateurs pour la validation des données.
+
+### Data Transfer Object (`RestaurantDTO.ts`)
+Utilisé pour transférer des données entre différentes couches de l'application.
+
+### Point d'Entrée (`main.ts`)
+Configure et démarre le serveur NestJS, et utilise `ValidationPipe` pour la validation globale des requêtes.
+
+### Fichier Test (`restaurant.controller.spec.ts`)
+Il s'agit d'un fichier de test généré automatiquement par NestJS pour tester les fonctionnalités du contrôleur des restaurants.
+Toutes les fonctionnalités ne sont pas dans le test.
+
 
 ## Installation
 
+Pour installer les dépendances, exécutez :
+
 ```bash
 $ npm install
-```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
